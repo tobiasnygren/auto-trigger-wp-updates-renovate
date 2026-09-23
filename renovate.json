@@ -7,13 +7,19 @@
   },
   "packageRules": [
     {
+      "description": "constraints.php mirrors config.platform.php in composer.json; don't bump it",
+      "matchDepTypes": ["tool-constraint"],
+      "enabled": false
+    },
+    {
       "matchPackageNames": ["roots/wordpress"],
       "matchUpdateTypes": ["major"],
       "enabled": false
     },
     {
       "matchPackageNames": ["wp-plugin/*", "wp-theme/*"],
-      "groupName": "wordpress plugins and themes"
+      "groupName": "wordpress plugins and themes",
+      "separateMajorMinor": false
     }
   ]
 }
