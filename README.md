@@ -55,6 +55,19 @@ Because `renovate.json` is already on the default branch, Renovate treats the re
 1. Install the [Mend Renovate app](https://github.com/apps/renovate) and give it access to this repository only.
 2. Wait for the next run inside the schedule window, or tick **Create all awaiting schedule PRs at once** in the Dependency Dashboard issue to get them now. Job logs are at [developer.mend.io](https://developer.mend.io/).
 
+## GitHub: self-hosted in Actions (alternative to the Mend app)
+
+Use this where you can't install the Mend app, for example in an organization that doesn't allow third-party apps. [`.github/workflows/renovate.yml`](.github/workflows/renovate.yml) runs the official [`renovatebot/github-action`](https://github.com/renovatebot/github-action). It's the GitHub equivalent of the Bitbucket pipeline below.
+
+It's **off by default**, because it would clash with the Mend app on this repo. To switch to it:
+
+1. Uninstall the Mend app, or remove this repo from its access list.
+2. Create a classic personal access token with the `repo` and `workflow` scopes. `workflow` lets Renovate update files in `.github/workflows`. Add it as the Actions secret `RENOVATE_TOKEN`.
+3. Add the repository variable `RENOVATE_SELF_HOSTED` = `true` (Settings → Secrets and variables → Actions → Variables).
+4. Run it from Actions → **Renovate** → **Run workflow**. Tick **ignore_schedule** to create branches outside the window. Otherwise it runs daily at 02:17 UTC.
+
+A GitHub App token (via [`actions/create-github-app-token`](https://github.com/actions/create-github-app-token)) also works and isn't tied to one user. See the action's README for the setup.
+
 ## Bitbucket Cloud: self-hosted in Pipelines
 
 Mend also has a hosted app for Bitbucket Cloud. This repo self-hosts instead, with [`bitbucket-pipelines.yml`](bitbucket-pipelines.yml), to test that path.

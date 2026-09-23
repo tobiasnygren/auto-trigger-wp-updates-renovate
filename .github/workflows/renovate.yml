@@ -1,0 +1,47 @@
+# Self-hosted Renovate on GitHub Actions: the GitHub equivalent of the
+# `custom: renovate` pipeline in bitbucket-pipelines.yml. Use it where the
+# Mend Renovate app can't be installed.
+#
+# It stays inactive until the repository variable RENOVATE_SELF_HOSTED is
+# "true", so it doesn't run alongside the Mend app (both would manage the
+# same renovate/* branches). Uninstall the app before you turn it on.
+#
+# Required secret:
+#   RENOVATE_TOKEN  classic PAT with the `repo` and `workflow` scopes
+#                   (`workflow` lets Renovate update files in .github/workflows)
+name: Renovate
+
+on:
+  schedule:
+    # Daily, inside the 00-06 UTC window that renovate.json allows.
+    - cron: "17 2 * * *"
+  workflow_dispatch:
+    inputs:
+      ignore_schedule:
+        description: Create branches outside the renovate.json schedule window
+        type: boolean
+        default: false
+
+permissions:
+  contents: read
+
+concurrency:
+  group: renovate
+  cancel-in-progress: false
+
+jobs:
+  renovate:
+    if: vars.RENOVATE_SELF_HOSTED == 'true'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Ignore schedule for this run
+        if: inputs.ignore_schedule
+        run: echo 'RENOVATE_FORCE={"schedule":["* * * * *"]}' >> "$GITHUB_ENV"
+
+      - name: Renovate
+        uses: renovatebot/github-action@v46.3.3
+        with:
+          token: ${{ secrets.RENOVATE_TOKEN }}
+        env:
+          RENOVATE_REPOSITORIES: ${{ github.repository }}
+          LOG_LEVEL: debug
