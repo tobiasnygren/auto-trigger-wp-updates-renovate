@@ -1,0 +1,25 @@
+# Self-hosted Renovate for Bitbucket Cloud.
+# Run it manually (Pipelines -> Run pipeline -> custom: renovate) or add a daily
+# schedule under Pipelines -> Schedules, firing inside the 00-06 UTC window
+# that renovate.json allows.
+#
+# Required secured repository variables:
+#   RENOVATE_BB_EMAIL      Atlassian account email of the Renovate user
+#   RENOVATE_BB_API_TOKEN  Atlassian API token (app passwords no longer work)
+# Optional:
+#   RENOVATE_GITHUB_COM_TOKEN  read-only github.com token for release notes
+pipelines:
+  custom:
+    renovate:
+      - step:
+          name: Renovate
+          image: renovate/renovate:latest
+          script:
+            - export RENOVATE_PLATFORM=bitbucket
+            - export RENOVATE_USERNAME="$RENOVATE_BB_EMAIL"
+            - export RENOVATE_PASSWORD="$RENOVATE_BB_API_TOKEN"
+            - export RENOVATE_GIT_AUTHOR="Renovate Bot <$RENOVATE_BB_EMAIL>"
+            # Bitbucket Cloud has no issues, so the Dependency Dashboard can't work.
+            - export RENOVATE_DEPENDENCY_DASHBOARD=false
+            - export LOG_LEVEL=debug
+            - renovate "$BITBUCKET_REPO_FULL_NAME"

@@ -1,0 +1,19 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "extends": ["config:recommended"],
+  "schedule": ["* 0-6 * * *"],
+  "constraints": {
+    "php": "8.3"
+  },
+  "packageRules": [
+    {
+      "matchPackageNames": ["roots/wordpress"],
+      "matchUpdateTypes": ["major"],
+      "enabled": false
+    },
+    {
+      "matchPackageNames": ["wp-plugin/*", "wp-theme/*"],
+      "groupName": "wordpress plugins and themes"
+    }
+  ]
+}
