@@ -81,6 +81,15 @@ Mend also has a hosted app for Bitbucket Cloud. This repo self-hosts instead, wi
 
 To test outside the schedule window, set `IGNORE_SCHEDULE` to `true` when you start the run.
 
+## Keeping GitHub and Bitbucket in sync
+
+GitHub is the source of truth. [`.github/workflows/mirror-to-bitbucket.yml`](.github/workflows/mirror-to-bitbucket.yml) pushes `main` to Bitbucket on every push to GitHub `main`. You can also run it by hand from the Actions tab.
+
+- It needs the Actions secret `BITBUCKET_API_TOKEN`: an Atlassian API token with the `write:repository:bitbucket` scope.
+- Only `main` is mirrored. Each Renovate instance manages its own `renovate/*` branches.
+- Merge Renovate PRs on GitHub only. After the mirror runs, Bitbucket's Renovate sees the update is already on `main` and closes its matching PR.
+- The push isn't forced. If you commit or merge directly on Bitbucket `main`, the mirror fails instead of overwriting that work.
+
 ## Gotchas
 
 | Problem | Fix |

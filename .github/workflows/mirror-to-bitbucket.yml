@@ -1,0 +1,41 @@
+# Mirrors main to the Bitbucket copy of this repo so both Renovate
+# instances work on the same code. Only main is mirrored: each platform's
+# Renovate manages its own renovate/* branches.
+#
+# Requires the Actions secret BITBUCKET_API_TOKEN: an Atlassian API token
+# with the write:repository:bitbucket scope.
+name: Mirror main to Bitbucket
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: mirror-to-bitbucket
+  cancel-in-progress: false
+
+jobs:
+  mirror:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+
+      - name: Push main to Bitbucket
+        env:
+          BB_TOKEN: ${{ secrets.BITBUCKET_API_TOKEN }}
+          BB_REPO: tobiasnygren/auto-trigger-wp-updates-renovate
+        run: |
+          if [ -z "$BB_TOKEN" ]; then
+            echo "::error::Secret BITBUCKET_API_TOKEN is not set"
+            exit 1
+          fi
+          # No --force: if Bitbucket main has commits GitHub doesn't, fail
+          # instead of overwriting them.
+          git push "https://x-bitbucket-api-token-auth:${BB_TOKEN}@bitbucket.org/${BB_REPO}.git" HEAD:refs/heads/main
