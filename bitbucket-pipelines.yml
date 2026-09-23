@@ -1,7 +1,8 @@
 # Self-hosted Renovate for Bitbucket Cloud.
 # Run it manually (Pipelines -> Run pipeline -> custom: renovate) or add a daily
 # schedule under Pipelines -> Schedules, firing inside the 00-06 UTC window
-# that renovate.json allows.
+# that renovate.json allows. Set IGNORE_SCHEDULE=true on a manual run to
+# create branches outside that window.
 #
 # Required secured repository variables:
 #   RENOVATE_BB_EMAIL      Atlassian account email of the Renovate user
@@ -11,6 +12,12 @@
 pipelines:
   custom:
     renovate:
+      - variables:
+          - name: IGNORE_SCHEDULE
+            default: "false"
+            allowed-values:
+              - "false"
+              - "true"
       - step:
           name: Renovate
           image: renovate/renovate:latest
@@ -20,6 +27,12 @@ pipelines:
             - export RENOVATE_PASSWORD="$RENOVATE_BB_API_TOKEN"
             - export RENOVATE_GIT_AUTHOR="Renovate Bot <$RENOVATE_BB_EMAIL>"
             # Bitbucket Cloud has no issues, so the Dependency Dashboard can't work.
-            - export RENOVATE_DEPENDENCY_DASHBOARD=false
+            # It must be forced off: config:recommended in renovate.json re-enables it.
+            - |
+              if [ "$IGNORE_SCHEDULE" = "true" ]; then
+                export RENOVATE_FORCE='{"dependencyDashboard":false,"schedule":["* * * * *"]}'
+              else
+                export RENOVATE_FORCE='{"dependencyDashboard":false}'
+              fi
             - export LOG_LEVEL=debug
             - renovate "$BITBUCKET_REPO_FULL_NAME"
