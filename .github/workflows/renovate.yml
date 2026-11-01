@@ -39,7 +39,7 @@ jobs:
         run: echo 'RENOVATE_FORCE={"schedule":["* * * * *"]}' >> "$GITHUB_ENV"
 
       - name: Renovate
-        uses: renovatebot/github-action@v46.3.3
+        uses: renovatebot/github-action@v46.3.11
         with:
           token: ${{ secrets.RENOVATE_TOKEN }}
         env:
