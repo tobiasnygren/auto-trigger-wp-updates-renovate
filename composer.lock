@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "775f10a4729ca80c4adbcfea92dc4507",
+    "content-hash": "3f199e861158b17cbd5107c64f61d1a7",
     "packages": [
         {
             "name": "composer/installers",
@@ -1074,15 +1074,15 @@
         },
         {
             "name": "wp-plugin/wordfence",
-            "version": "7.11.7",
+            "version": "9.1.1",
             "source": {
                 "type": "svn",
                 "url": "https://plugins.svn.wordpress.org/wordfence/",
-                "reference": "tags/7.11.7"
+                "reference": "tags/9.1.1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://downloads.wordpress.org/plugin/wordfence.7.11.7.zip"
+                "url": "https://downloads.wordpress.org/plugin/wordfence.9.1.1.zip"
             },
             "require": {
                 "composer/installers": "~1.0|~2.0"
@@ -1101,19 +1101,20 @@
                 "issues": "https://wordpress.org/support/plugin/wordfence",
                 "source": "https://plugins.svn.wordpress.org/wordfence"
             },
-            "time": "2026-09-08T15:41:22+00:00"
+            "time": "2026-11-10T19:03:05+00:00",
+            "published-time": "2026-11-10T19:03:05+00:00"
         },
         {
             "name": "wp-plugin/wordpress-seo",
-            "version": "24.9",
+            "version": "28.9",
             "source": {
                 "type": "svn",
                 "url": "https://plugins.svn.wordpress.org/wordpress-seo/",
-                "reference": "tags/24.9"
+                "reference": "tags/28.9"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://downloads.wordpress.org/plugin/wordpress-seo.24.9.zip"
+                "url": "https://downloads.wordpress.org/plugin/wordpress-seo.28.9.zip"
             },
             "require": {
                 "composer/installers": "~1.0|~2.0"
@@ -1132,19 +1133,20 @@
                 "issues": "https://wordpress.org/support/plugin/wordpress-seo",
                 "source": "https://plugins.svn.wordpress.org/wordpress-seo"
             },
-            "time": "2026-09-21T14:58:27+00:00"
+            "time": "2026-11-18T06:06:41+00:00",
+            "published-time": "2026-11-18T06:06:41+00:00"
         },
         {
             "name": "wp-plugin/wp-mail-smtp",
-            "version": "3.11.1",
+            "version": "4.10.4",
             "source": {
                 "type": "svn",
                 "url": "https://plugins.svn.wordpress.org/wp-mail-smtp/",
-                "reference": "tags/3.11.1"
+                "reference": "tags/4.10.4"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://downloads.wordpress.org/plugin/wp-mail-smtp.3.11.1.zip"
+                "url": "https://downloads.wordpress.org/plugin/wp-mail-smtp.4.10.4.zip"
             },
             "require": {
                 "composer/installers": "~1.0|~2.0"
@@ -1156,14 +1158,15 @@
                     "name": "Syed Balkhi"
                 }
             ],
-            "description": "Make email delivery easy for WordPress. Connect with SMTP, Gmail, Outlook, SendGrid, Mailgun, SES, Zoho, + more. Rated #1 WordPress SMTP Email plugin.",
+            "description": "Make email delivery easy for WordPress. Connect with SMTP, Gmail, Brevo, SendGrid, Amazon SES + more, with powerful WordPress SMTP Email plugin.",
             "homepage": "https://wpmailsmtp.com/",
             "support": {
                 "changelog": "https://wordpress.org/plugins/wp-mail-smtp/#developers",
                 "issues": "https://wordpress.org/support/plugin/wp-mail-smtp",
                 "source": "https://plugins.svn.wordpress.org/wp-mail-smtp"
             },
-            "time": "2026-06-25T08:56:20+00:00"
+            "time": "2026-11-11T14:07:11+00:00",
+            "published-time": "2026-11-11T14:07:11+00:00"
         },
         {
             "name": "wp-plugin/wpforms-lite",
@@ -1307,5 +1310,5 @@
     "platform-overrides": {
         "php": "8.3"
     },
-    "plugin-api-version": "2.9.0"
+    "plugin-api-version": "2.11.0"
 }
